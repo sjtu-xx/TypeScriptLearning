@@ -1,15 +1,18 @@
 ## 简介
+
 - 以`JS`为基础构建的语言
 - `JS`的超集
 - 可以在任何支持`JS`的平台执行
 - TS不能直接被JS解析器执行
 - 可以编译为JS
+
 ## 安装
+
 1. 安装nodejs
-	-  [Download | Node.js (nodejs.org)](https://nodejs.org/en/download)
-	- 命令行`node -v`
+    - [Download | Node.js (nodejs.org)](https://nodejs.org/en/download)
+    - 命令行`node -v`
 2. 安装TS
-	- `npm --proxy http://localhost:7890 install -g typescript`
+    - `npm --proxy http://localhost:7890 install -g typescript`
 3. 命令行输入`tsc`
 
 > [!note]
@@ -18,6 +21,7 @@
 > - `tsc -w`监视模式，自动编辑成JS
 
 ## 配置文件
+
 ```json
 {
   // include 哪些文件需要被编译
@@ -97,7 +101,8 @@
     // "sourceMap": true,                                /* 为生成的 JavaScript 文件创建源映射文件。 */
     // "inlineSourceMap": true,                          /* 将源映射文件包含在生成的 JavaScript 内部。 */
     // "outFile": "./",                                  /* 指定将所有输出捆绑成一个 JavaScript 文件。如果 'declaration' 为 true，则也指定将所有 .d.ts 输出捆绑成一个文件。 */
-    "outDir": "./dist/",                                   /* 指定所有输出文件的输出文件夹。 */
+    "outDir": "./dist/",
+    /* 指定所有输出文件的输出文件夹。 */
     // "removeComments": true,                           /* 禁用输出注释。 */
     // "noEmit": true,                                   /* 禁用编译输出文件。 */
     // "importHelpers": true,                            /* 允许在整个项目中从 tslib 导入帮助函数，而不是每个文件都包含它们。 */
@@ -156,7 +161,9 @@
 ```
 
 ## 类型
+
 ### 类型基础
+
 ```ts
 let a: number;
 a = 12;
@@ -249,6 +256,53 @@ func = function (n1, n2) {
 ```
 
 ## webpack打包
-- `npm init -y`项目初始化
-- `npm i --proxy http://localhost:7890 -D webpack webpack-cli typescript ts-loader`
+
+1.`npm init -y`项目初始化
+2.`npm i --proxy http://localhost:7890 -D webpack webpack-cli typescript ts-loader`
+3. 增加webpack配置文件`webpack.config.js`
+```js
+const path = require("path");
+
+module.exports = {
+    entry: "./src/index.js",
+    output: {
+        path: path.resolve(__dirname, "dist"),
+        filename: "bundle.js"
+    },
+    module: {
+        rules: [
+            {
+                // 指定的是规则生效的文件
+                test: /\.ts$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
+            }
+        ]
+    }
+}
+```
+
+4. 增加`tsconfig.json`
+
+```json
+{
+  "compilerOptions": {
+    "module": "ES2015",
+    "target": "ES2015",
+    "strict": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
+```
+
+5. `package.json`中增加build
+```json
+{
+   "scripts": {
+      "build": "webpack"
+   }
+}
+```
 
