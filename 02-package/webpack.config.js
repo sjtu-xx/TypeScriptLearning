@@ -26,8 +26,8 @@ module.exports = {
             template: "./src/index.html"
         })
     ],
-    // 设置引用模块。高版本已经不需要了
-    // resolve: {
-    //     extensions: ['.ts', '.js']
-    // }
+    // 设置引用模块。
+    resolve: {
+        extensions: ['.ts', '.js']
+    }
 }
