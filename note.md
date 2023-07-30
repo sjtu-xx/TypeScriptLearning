@@ -256,7 +256,7 @@ func = function (n1, n2) {
 ```
 
 ## webpack打包
-
+### 打包
 1.`npm init -y`项目初始化
 2.`npm i --proxy http://localhost:7890 -D webpack webpack-cli typescript ts-loader`
 3. 增加webpack配置文件`webpack.config.js`
@@ -306,3 +306,53 @@ module.exports = {
 }
 ```
 
+### 自动生成html文件
+1. 安装`html-webpack-plugin`
+  - `npm install -D --proxy="http://localhost:7890" html-webpack-plugin`
+2. 修改`webpack.config.js`
+```js
+const HTMLWebpackPlugin = require("html-webpack-plugin");
+module.exports = {
+   // 配置webpack插件
+   plugins: [
+      new HTMLWebpackPlugin({
+         // title: "Webpack Plugin自定义的title"
+         template: "./src/index.html"
+      })
+   ]
+}
+```
+
+3. `npm run build`
+
+### 热构建
+1. 安装`webpack-dev-server`
+  - `npm install --proxy http://localhost:7890 -D webpack-dev-server`
+2. 修改`package.json`
+```json
+{
+  "scripts": {
+    "start": "webpack serve --open"
+  }
+}
+```
+3. 修改webpack的mode
+在`weback.config.js`增加mode
+```js
+module.exports = {
+  mode: "development"
+}
+```
+
+### 自动清空dist
+1. 在webpack5以上的版本中支持
+```js
+module.exports = {
+  // ...
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,  // 清理输出目录
+  },
+};
+
+```

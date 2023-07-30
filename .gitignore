@@ -1,5 +1,4 @@
 # Project exclude paths
-*.js
 *.js.map
 .idea
 **/node_modules

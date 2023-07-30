@@ -1,0 +1,1 @@
+export const t1: string = "t1";
