@@ -1,5 +1,5 @@
 # Project exclude paths
-/test.js
-/test.js.map
+/basic_type.js
+/basic_type.js.map
 
 .idea
