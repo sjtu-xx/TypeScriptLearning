@@ -1,5 +1,6 @@
 let a: number;
 a = 12;
+console.log(a)
 
 let b: string = "z";
 // 数组
