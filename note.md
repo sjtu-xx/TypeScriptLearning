@@ -356,3 +356,10 @@ module.exports = {
 };
 
 ```
+
+### babel
+解决兼容性支持
+
+1. 安装
+   - `npm install --proxy http://localhost:7890 -D @babel/core @babel/preset-env babel-loader core-js`
+2. 
