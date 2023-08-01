@@ -22,7 +22,7 @@
 
 ## 配置文件
 
-```json
+```json5
 {
   // include 哪些文件需要被编译
   // ["src/**/*"] 两个星表示所有目录，一个星表示所有文件
@@ -256,10 +256,13 @@ func = function (n1, n2) {
 ```
 
 ## webpack打包
+
 ### 打包
-1.`npm init -y`项目初始化
-2.`npm i --proxy http://localhost:7890 -D webpack webpack-cli typescript ts-loader`
+
+1. `npm init -y`项目初始化
+2. `npm i --proxy http://localhost:7890 -D webpack webpack-cli typescript ts-loader`
 3. 增加webpack配置文件`webpack.config.js`
+
 ```js
 const path = require("path");
 
@@ -298,37 +301,46 @@ module.exports = {
 ```
 
 5. `package.json`中增加build
+
 ```json
 {
-   "scripts": {
-      "build": "webpack"
-   }
+  "scripts": {
+    "build": "webpack"
+  }
 }
 ```
 
 ### 自动生成html文件
+
 1. 安装`html-webpack-plugin`
-  - `npm install -D --proxy="http://localhost:7890" html-webpack-plugin`
+
+- `npm install -D --proxy="http://localhost:7890" html-webpack-plugin`
+
 2. 修改`webpack.config.js`
+
 ```js
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
-   // 配置webpack插件
-   plugins: [
-      new HTMLWebpackPlugin({
-         // title: "Webpack Plugin自定义的title"
-         template: "./src/index.html"
-      })
-   ]
+    // 配置webpack插件
+    plugins: [
+        new HTMLWebpackPlugin({
+            // title: "Webpack Plugin自定义的title"
+            template: "./src/index.html"
+        })
+    ]
 }
 ```
 
 3. `npm run build`
 
 ### 热构建
+
 1. 安装`webpack-dev-server`
-  - `npm install --proxy http://localhost:7890 -D webpack-dev-server`
+
+- `npm install --proxy http://localhost:7890 -D webpack-dev-server`
+
 2. 修改`package.json`
+
 ```json
 {
   "scripts": {
@@ -336,30 +348,68 @@ module.exports = {
   }
 }
 ```
+
 3. 修改webpack的mode
-在`weback.config.js`增加mode
+   在`weback.config.js`增加mode
+
 ```js
 module.exports = {
-  mode: "development"
+    mode: "development"
 }
 ```
 
 ### 自动清空dist
+
 1. 在webpack5以上的版本中支持
+
 ```js
 module.exports = {
-  // ...
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    clean: true,  // 清理输出目录
-  },
+    // ...
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        clean: true,  // 清理输出目录
+    },
 };
 
 ```
 
 ### babel
+
 解决兼容性支持
 
 1. 安装
-   - `npm install --proxy http://localhost:7890 -D @babel/core @babel/preset-env babel-loader core-js`
-2. 
+    - `npm install --proxy http://localhost:7890 -D @babel/core @babel/preset-env babel-loader core-js`
+
+2. 修改`webpack.config.js`
+```js
+    {
+    module: {
+        rules: [
+            {
+                // 指定的是规则生效的文件
+                test: /\.ts$/,
+                use: [{
+                    loader: 'babel-loader',
+                    options: {
+                        presets:
+                            [['@babel/preset-env',
+                                {
+                                    // 要兼容的版本
+                                    targets: {
+                                        "chrome": "58",
+                                        "ie": "11"
+                                    },
+                                    // corejs版本
+                                    "corejs": "3",
+                                    // 使用corejs的方式
+                                    "useBuiltIns": "usage" /*按需加载*/
+                                }
+                            ]]
+                    },
+                }, 'ts-loader'], /*先使用后面的加载器，然后用前面的*/
+                exclude: /node_modules/
+            }
+        ]
+    }
+}
+```
