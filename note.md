@@ -541,3 +541,35 @@ function fn2<T extends Person, U>(arg1: T, arg2: U): T {
 }
 ```
 
+## 补充
+### `?`的用法
+在 TypeScript (TS) 中，`?` 有多种用法，下面列出了它的主要应用：
+
+1. **可选属性**：在接口、类或类型别名中标记某个属性为可选。
+
+   `interface Person { name: string;   age?: number; }`
+
+2. **可选参数**：在函数的参数列表中标记某个参数为可选。
+
+   `function greet(name: string, greeting?: string) {   // ... }`
+
+3. **可选链** (Optional Chaining)：允许在查询链的任何部分上进行可选访问。如果链中的某个部分为 `null` 或 `undefined`，则整个表达式的结果也会是 `null` 或 `undefined`。
+
+   `let x = obj?.property?.subProperty;`
+
+4. **空值合并运算符**：当你想给可能为 `null` 或 `undefined` 的值设定一个默认值时，可以使用 `??` 运算符。
+
+   `let y = value ?? defaultValue;`
+
+   注意：这虽然包含了 `?`，但它是一个双字符的运算符，和前面的用法不同。
+
+5. **条件（三元）运算符**：这是 JavaScript (和多数 C 风格的编程语言) 中常见的，不特定于 TypeScript，但值得提及。
+
+   `let z = condition ? valueIfTrue : valueIfFalse;`
+
+6. **函数类型的可选参数**：在定义函数类型时也可以使用 `?` 来标记某个参数为可选。
+
+   `type Callback = (data?: any) => void;`
+
+总结，`?` 在 TypeScript 中主要用于标记可选属性和参数，而可选链是 TypeScript 3.7 新引入的特性，用于更安全地访问对象的属性。
+
