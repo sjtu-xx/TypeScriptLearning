@@ -573,3 +573,8 @@ function fn2<T extends Person, U>(arg1: T, arg2: U): T {
 
 总结，`?` 在 TypeScript 中主要用于标记可选属性和参数，而可选链是 TypeScript 3.7 新引入的特性，用于更安全地访问对象的属性。
 
+
+### `!`
+非空断言，放在表达式后面表示对象不是null或undefined
+
+用法 `x!.length`
